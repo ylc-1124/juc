@@ -8,9 +8,9 @@ class Share {
 
     //+1
     public synchronized void incr() throws InterruptedException {
-        //判断
-        if (number != 0) { //不等于0 线程等待
-                this.wait();
+        //判断  使用while替换原来的if解决虚假唤醒问题
+        while (number != 0) { //不等于0 线程等待
+                this.wait(); //wait特点：哪里等待哪里唤醒
 
         }
         //等于0时
@@ -21,7 +21,7 @@ class Share {
 
     //-1
     public synchronized void decr() throws InterruptedException {
-        if (number != 1) {
+        while (number != 1) {
                 this.wait();
         }
         number--;
