@@ -11,7 +11,7 @@ class LTicket {
     private int number = 30;
 
     //创建可重入锁
-    private final ReentrantLock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock(); //构造方法可设置是否为公平锁
 
     //卖票方法
     public void sale() {
