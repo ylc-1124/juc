@@ -51,6 +51,24 @@ public class ThreadDemo01 {
                 }
             }
         }, "线程2").start();
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    share.incr(); //+1
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "线程3").start();
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    share.decr(); //-1
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "线程4").start();
     }
 
 }
