@@ -5,6 +5,10 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * 总结：1.写锁是独占锁 由下面毫秒值可以看出 每次只有一个线程在执行写操作
+ *      2.读锁是共享锁，由下面毫秒值可以看出 可以多个线程一起进行读操作
+ */
 //资源类
 class MyCache {
     //创建Map集合
@@ -17,12 +21,14 @@ class MyCache {
         rwLock.writeLock().lock();
 
         try {
-            System.out.println(Thread.currentThread().getName() + "正在写操作" + key);
+            System.out.println(Thread.currentThread().getName() + "正在写操作" + key
+                    +"  当前毫秒值=>"+System.currentTimeMillis());
             //暂停一会
             TimeUnit.MILLISECONDS.sleep(300);
             //放入数据
             map.put(key, value);
-            System.out.println(Thread.currentThread().getName() + "写完了" + key);
+            System.out.println(Thread.currentThread().getName() + "写完了" + key
+                    +"  当前毫秒值=>"+System.currentTimeMillis());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
@@ -40,12 +46,14 @@ class MyCache {
         Object result = null;
 
         try {
-            System.out.println(Thread.currentThread().getName() + "正在读操作" + key);
+            System.out.println(Thread.currentThread().getName() + "正在读操作" + key
+                    +"  当前毫秒值=>"+System.currentTimeMillis());
             //暂停一会
             TimeUnit.MILLISECONDS.sleep(300);
             //读
             result = map.get(key);
-            System.out.println(Thread.currentThread().getName() + "取完了" + key);
+            System.out.println(Thread.currentThread().getName() + "取完了" + key
+                    +"  当前毫秒值=>"+System.currentTimeMillis());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
